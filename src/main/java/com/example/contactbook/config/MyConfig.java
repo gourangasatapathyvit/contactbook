@@ -53,7 +53,12 @@ public class MyConfig{
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.authorizeRequests().antMatchers("/admin/**").hasRole("ADMIN")
     .antMatchers("/user/**").hasRole("USER")
-    .antMatchers("/**").permitAll().and().formLogin().loginPage("/login").and().csrf().disable();
+    .antMatchers("/**").permitAll().and().formLogin()
+    .loginPage("/login")
+    .loginProcessingUrl("/dologin")
+    .defaultSuccessUrl("/user/index")
+    .failureForwardUrl("/errorpage")
+    .and().csrf().disable();
 
     return http.build();
 
