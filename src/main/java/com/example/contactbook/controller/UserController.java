@@ -17,13 +17,17 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.example.contactbook.entities.Contact;
+import com.example.contactbook.repo.ContactRepo;
 import com.example.contactbook.repo.UserRepo;
 
 @Controller
 @RequestMapping("/user")
-public class UserController implements WebMvcConfigurer{
+public class UserController implements WebMvcConfigurer {
     @Autowired
     private UserRepo userRepo;
+
+    @Autowired
+    private ContactRepo contactrRepo;
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
@@ -51,9 +55,11 @@ public class UserController implements WebMvcConfigurer{
     @PostMapping("/addcontact")
     public String saveContact(Model model, @ModelAttribute("contact") Contact contact, BindingResult bindingResult,
             @RequestParam(value = "checkbox", defaultValue = "false") boolean checkbox,
-            HttpSession session) {
+            HttpSession session,Principal principal) {
 
         System.out.println(contact);
+        contact.setUser(userRepo.getUserByUserName(principal.getName()));
+        contactrRepo.save(contact);
 
         return "dashboard/dashboard";
     }

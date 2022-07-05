@@ -15,8 +15,12 @@ import org.hibernate.annotations.GenericGenerator;
 @Table(name = "CONTACT")
 public class Contact {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY,generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int contactid;
+
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.IDENTITY,generator="system-uuid")
+    // @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String name;
     private String secondName;
     private String work;
@@ -28,13 +32,12 @@ public class Contact {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name="id", nullable=false)
+    @JoinColumn(name = "id", nullable = false)
     private User user;
 
-    
-
-    public Contact(String name, String secondName, String work, String email, String phone, String image,
+    public Contact(int id, String name, String secondName, String work, String email, String phone, String image,
             String description, User user) {
+        this.contactid = id;
         this.name = name;
         this.secondName = secondName;
         this.work = work;
@@ -46,6 +49,14 @@ public class Contact {
     }
 
     public Contact() {
+    }
+
+    public int getId() {
+        return contactid;
+    }
+
+    public void setId(int id) {
+        this.contactid = id;
     }
 
     public String getName() {
@@ -103,7 +114,6 @@ public class Contact {
     public void setDescription(String description) {
         this.description = description;
     }
-    
 
     public User getUser() {
         return user;
@@ -115,8 +125,9 @@ public class Contact {
 
     @Override
     public String toString() {
-        return "Contact [description=" + description + ", email=" + email + ", image=" + image + ", name=" + name
-                + ", phone=" + phone + ", secondName=" + secondName + ", work=" + work + "]";
+        return "Contact [contactid=" + contactid + ", description=" + description + ", email=" + email + ", image="
+                + image + ", name=" + name + ", phone=" + phone + ", secondName=" + secondName + ", user=" + user
+                + ", work=" + work + "]";
     }
 
 }
