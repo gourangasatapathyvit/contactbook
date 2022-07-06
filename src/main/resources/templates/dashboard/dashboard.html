@@ -44,7 +44,8 @@
 
             <h2>Add Contacts</h2>
 
-            <form action="#" th:action="@{/user/addcontact}" method="post" th:object="${contact}">
+            <form action="#" th:action="@{/user/addcontact}" method="post" th:object="${contact}"
+                enctype="multipart/form-data">
                 <!-- 2 column grid layout with text inputs for the first and last names -->
                 <div class="row mb-4">
                     <div class="col">
@@ -92,7 +93,7 @@
                 <!-- image upload -->
                 <div class="form-outline mb-4">
                     <label for="img">Select image:</label>
-                    <input type="file" id="img" name="image" accept="image/*" th:field="*{image}">
+                    <input type="file" id="img" name="pic" accept="image/*">
                 </div>
 
                 <!-- Checkbox -->
